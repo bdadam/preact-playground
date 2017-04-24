@@ -9,7 +9,7 @@ import foo from './home';
 
 const Fox = ({ name }) => (
 	<div class="fox">
-		<h5>{ name }</h5>
+		<h5>{name}</h5>
 		<p>This page is all about {name}.</p>
 	</div>
 );
@@ -19,8 +19,8 @@ const app = express();
 app.use('/static', express.static('dist'));
 
 app.get('/', (req, res) => {
-    const html = render(foo);
-    res.send(`
+	const html = render(foo);
+	res.send(`
         <!DOCTYPE html>
         <html>
             <head>
