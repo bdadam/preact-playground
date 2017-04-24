@@ -11,6 +11,13 @@ module.exports = {
         filename: 'main.min.js',
         path: path.resolve(__dirname, 'dist')
     },
+
+    devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 9000
+    },
+
     module: {
         rules: [
             {
@@ -39,5 +46,5 @@ module.exports = {
         process.env.NODE_ENV === 'production' ? [
             new webpack.optimize.UglifyJsPlugin()
         ] : []
-    )
+        )
 }

@@ -6,12 +6,21 @@ const gulp = require('gulp');
 
 let ENV = process.env.NODE_ENV || 'production';
 
-gulp.task('start', function () {
-    nodemon({
+gulp.task('start', cb => {
+    
+    let started = false;
+
+    return nodemon({
         script: 'index.js',
         ext: 'js',
         env: { 'NODE_ENV': ENV, PORT: 3300 },
         ignore: ['dist/']
+    }).on('start', () => {
+
+        if (!started) {
+            cb();
+            started = true;
+        }
     });
 });
 

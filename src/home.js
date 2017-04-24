@@ -7,6 +7,6 @@ import { h, render } from 'preact';
 
 const click = () => console.log('qwe');
 
-const foo = <div id="foo" onclick={ click }>Hello92345678!</div>;
+const foo = <div id="foo" onclick={ click }>Hello12!</div>;
 
 export default foo;
