@@ -5,7 +5,9 @@ import path from 'path';
 import express from 'express';
 import { h } from 'preact';
 import render from 'preact-render-to-string';
-import Foo from './home';
+import Application from './Application';
+
+import API from './api/api-server';
 
 const Fox = ({ name }) => (
 	<div class="fox">
@@ -27,14 +29,15 @@ if (process.env.NODE_ENV !== 'production') {
 			children: false,
 			chunks: false,
 			colors: true
-		}
+		},
+		lazz: true
 	}));
 } else {
 	app.use('/static', express.static('dist'));
 }
 
 app.get('/', (req, res) => {
-	const html = render(<Foo/>);
+	const html = render(<Application API={API}/>);
 	res.send(`
         <!DOCTYPE html>
         <html>
@@ -49,6 +52,8 @@ app.get('/', (req, res) => {
 		</html>
 	`);
 });
+
+
 
 app.get('/:fox', (req, res) => {
 	let html = render(<Fox name={req.params.fox} />);

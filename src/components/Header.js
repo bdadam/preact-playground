@@ -4,6 +4,7 @@ import { h, Component } from 'preact';
 
 import './Header.scss';
 
+
 export default class Header extends Component {
 
     constructor() {

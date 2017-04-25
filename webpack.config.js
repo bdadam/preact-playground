@@ -30,6 +30,12 @@ module.exports = {
     // },
 
     // stats: 'minimal',
+    resolve: {
+        alias: {
+            // './src/api': './src/api-client'
+            // './api': './src/api/api-client'
+        }
+    },
     module: {
         rules: [
             {

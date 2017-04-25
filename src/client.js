@@ -2,7 +2,9 @@
 
 import { h, render } from 'preact';
 
-import Foo from './home';
+import Application from './Application';
+
+import API from './api/api-client';
 
 const appContainer = document.createElement('div');
 // document.body.appendChild(appContainer);
@@ -10,7 +12,7 @@ const appContainer = document.createElement('div');
 const serverRenderedAppContainer = document.querySelector('#app');
 
 // render(<Foo/>, appContainer);
-render(<Foo/>, document.body);
+render(<Application API={API}/>, document.body);
 serverRenderedAppContainer.remove();
 // const x = render(<Foo/>, serverRenderedAppContainer);
 
