@@ -5,7 +5,7 @@ import path from 'path';
 import express from 'express';
 import { h } from 'preact';
 import render from 'preact-render-to-string';
-import foo from './home';
+import Foo from './home';
 
 const Fox = ({ name }) => (
 	<div class="fox">
@@ -16,10 +16,25 @@ const Fox = ({ name }) => (
 
 const app = express();
 
-app.use('/static', express.static('dist'));
+const webpackDevMiddleware = require('webpack-dev-middleware');
+const webpack = require('webpack');
+const webpackConfig = require('../webpack.config');
+const compiler = webpack(webpackConfig);
+
+if (process.env.NODE_ENV !== 'production') {
+	app.use('/static', webpackDevMiddleware(compiler, {
+		stats: {
+			children: false,
+			chunks: false,
+			colors: true
+		}
+	}));
+} else {
+	app.use('/static', express.static('dist'));
+}
 
 app.get('/', (req, res) => {
-	const html = render(foo);
+	const html = render(<Foo/>);
 	res.send(`
         <!DOCTYPE html>
         <html>
@@ -28,8 +43,8 @@ app.get('/', (req, res) => {
 				<link rel="stylesheet" href="/static/main.css">
 			</head>
 			<body>
-				<div id="app">${html}</div>
-				<script src="/static/main.min.js"></script>
+				<div id="app" class="server-rendered">${html}</div>
+				<script src="/static/main.min.js" defer></script>
 			</body>
 		</html>
 	`);

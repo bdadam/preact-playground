@@ -37,6 +37,8 @@ gulp.task('webpack', () => {
 
     return gulp.src('src/client.js')
         .pipe(webpackStream(webpackConfig, webpack2))
+        // .on('error', (e) => { console.error(e); })
+        // .on('error', (e) => { gulp.emit('end') })
         .pipe(gulp.dest('dist/'));
 });
 
@@ -44,14 +46,11 @@ gulp.task('bs', () => {
     const bs = require('browser-sync').create();
 
     bs.init({
+        port: 3000,
         proxy: 'localhost:3300',
         open: false,
         files: ['**/*.js', '**/*.scss'],
         reloadDebounce: 500
-        // watchOptions: {},
-
-        // files: ['./dist', './src'],
-        // middleware: require('./src/server').default
     });
 
     // bs.watch(['**/*.js', '**/*.scss']);
@@ -61,4 +60,5 @@ gulp.task('bs', () => {
 gulp.task('default', ['start', 'webpack']);
 
 // gulp.task('dev', ['set-dev', 'webpack', 'bs']);
-gulp.task('dev', ['set-dev', 'webpack', 'start', 'bs']);
+// gulp.task('dev', ['set-dev', 'webpack', 'start', 'bs']);
+gulp.task('dev', ['set-dev', 'start', 'bs']);

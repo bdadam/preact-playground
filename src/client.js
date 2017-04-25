@@ -1,14 +1,31 @@
-import { render } from 'preact';
+/** @jsx h */
 
-import foo from './home';
+import { h, render } from 'preact';
 
-// const div = document.createElement('div');
+import Foo from './home';
 
-render(foo, document.querySelector('#app'), document.querySelector('#app'));
+const appContainer = document.createElement('div');
+// document.body.appendChild(appContainer);
 
-// const node = document.querySelector('#app');
+const serverRenderedAppContainer = document.querySelector('#app');
 
-// node.parentNode.replaceChild(node, div);
+// render(<Foo/>, appContainer);
+render(<Foo/>, document.body);
+serverRenderedAppContainer.remove();
+// const x = render(<Foo/>, serverRenderedAppContainer);
+
+// serverRenderedAppContainer.parentNode.replaceChild(appContainer, serverRenderedAppContainer);
+
+// serverRenderedAppContainer.parentNode.replaceChild(appContainer, serverRenderedAppContainer);
+
+
+// render(foo, document.querySelector('#app'), document.querySelector('#app'));
+// render(foo, document.querySelector('#app'));
+// render(Home, appContainer);
+
+// const serverRenderedAppContainer = document.querySelector('#app');
+
+// serverRenderedAppContainer.parentNode.replaceChild(serverRenderedAppContainer, appContainer);
 
 if (module.hot) {
     require('preact/devtools');
