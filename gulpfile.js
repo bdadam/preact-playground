@@ -7,6 +7,7 @@ const gulp = require('gulp');
 let ENV = process.env.NODE_ENV || 'production';
 
 const bs = require('browser-sync').create();
+const bs2 = require('browser-sync').create();
 
 gulp.task('start', cb => {
     
@@ -15,7 +16,7 @@ gulp.task('start', cb => {
     return nodemon({
         script: 'index.js',
         ext: 'js',
-        env: { 'NODE_ENV': ENV, PORT: 3300 },
+        env: { 'NODE_ENV': ENV, PORT: 3000 },
         ignore: ['dist/', 'node_modules/']
     }).on('start', () => {
 
@@ -24,7 +25,7 @@ gulp.task('start', cb => {
             started = true;
         }
     }).on('restart', () => {
-        // bs.reload({ stream: false });
+        bs2.reload({ stream: false });
         // setTimeout(() => bs.reload({ stream: false }), 500);
         // setTimeout(() => bs.reload(), 500);
     });
@@ -38,6 +39,8 @@ gulp.task('webpack', () => {
     const webpackStream = require('webpack-stream');
     const webpack2 = require('webpack');
     const webpackConfig = require('./webpack.config');
+
+    webpackConfig.watch = true;
 
     return gulp.src('src/client.js')
         .pipe(webpackStream(webpackConfig, webpack2))
@@ -58,12 +61,10 @@ gulp.task('bs', () => {
             children: false,
             chunks: false,
             colors: true
-        },
-        // lazy: true,
-        // serverSideRender: true
-    })
+        }
+    });
 
-    const init = () => bs.init({
+    bs.init({
         port: 3000,
         open: false,
         ghostMode: false,
@@ -77,13 +78,6 @@ gulp.task('bs', () => {
                 handle: wmw
             },
             require('./src/server', require).default
-            
-            // (...args) => {
-            // // const fresh = require('fresh-require');
-            // // const server = fresh('./src/server', require).default;
-            // const server = require('./src/server', require).default;
-            // server(...args);
-        // }
         ],
         // https: true,
         files: ['src/**/*'],
@@ -92,43 +86,16 @@ gulp.task('bs', () => {
         online: false,
         // reloadOnRestart: true
     });
-
-    // bs.watch(['src/**/*.js'], () => {
-    //     // console.log(require.cache);
-    // });
-
-    init();
-
-    // gulp.watch(['src/**/*.js'], () => {
-    //     bs.exit();
-    //     init();
-    //     // console.log('xxx');
-    //     // delete require.cache;
-    //     // Object.keys(require.cache).forEach(function (key) { delete require.cache[key] });
-    //     // bs.reload();
-    // });
-    
-    // bs.init({
-    //     port: 3000,
-    //     proxy: 'localhost:3300',
-    //     open: false,
-    //     files: ['**/*.js', '**/*.scss', '!node_modules'],
-    //     // files: ['dist/**/*'],
-    //     // reloadDebounce: 500
-    // });
-
-    // bs.watch(['**/*.js', '**/*.scss'], () => bs.reload());
-    // bs.watch(['./src/**/*.js', './src/**/*.scss']);
 });
 
 gulp.task('bs2', () => {
-     bs.init({
+     bs2.init({
         port: 3000,
         proxy: 'localhost:3300',
         open: false,
         // files: ['**/*.js', '**/*.scss', '!node_modules'],
         // files: ['dist/**/*'],
-        reloadDebounce: 500
+        // reloadDebounce: 500
     });
 });
 
@@ -139,3 +106,4 @@ gulp.task('default', ['start', 'webpack']);
 // gulp.task('dev', ['set-dev', 'start', 'bs']);
 // gulp.task('dev', ['set-dev', 'webpack', 'bs']);
 gulp.task('dev', ['set-dev', 'bs']);
+gulp.task('dev-server', ['set-dev', 'webpack', 'start']);
