@@ -2,18 +2,22 @@
 
 import './main.scss';
 
-
 import Header from './components/Header';
 import Footer from './components/Footer';
 
-import { h, render, Component } from 'preact';
+import Helmet from 'preact-helmet';
 
-const click = () => {
-    // console.log('qwe');
-};
+import { h, render } from 'preact';
 
 const foo = ({API}) => (
-    <div class="page-container" onclick={click}>
+    <div class="page-container">
+        <Helmet
+            htmlAttributes={{ lang: "en" }}
+            title="My Title"
+            meta={[
+                { "name": "description" , "content": "Description", "og:description": "ogdesc" }
+            ]}
+         />
         <Header />
         <main>
             Hello12!

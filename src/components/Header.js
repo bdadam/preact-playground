@@ -1,9 +1,10 @@
 /** @jsx h */
 
+import classnames from 'classnames';
+
 import { h, Component } from 'preact';
 
 import './Header.scss';
-
 
 export default class Header extends Component {
 
@@ -15,18 +16,16 @@ export default class Header extends Component {
     render(props, state) {
 
         return (
-            <header class="site-header">
+            <header class={classnames({"site-header": true, "site-header--open": state.open})}>
                 <div class="site-header__header-bar">
                     <button class="site-header__menu-toggle" onClick={this.toggleMenu.bind(this)}>Menu</button>
                     Site Header
                 </div>
-                {
-                    state.open ? (
-                        <nav class="site-header__nav">
-                            <a href="/">Home</a>
-                            <a href="/">About</a>
-                        </nav>) : ''
-                }
+                <nav class="site-header__nav">
+                    <a href="/">Home</a>
+                    <a href="/">About</a>
+                </nav>
+                { "asdfg///xxyyaabbccddeeffgghhiijjkkllmmnnOOppqqrrssttuuvvwwxxyyzz11" }
             </header>
         );
     }

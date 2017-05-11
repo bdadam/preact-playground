@@ -9,33 +9,13 @@ const extractScss = new ExtractTextPlugin('[name].css');
 const isProd = process.env.NODE_ENV === 'production';
 
 module.exports = {
+    cache: true,
     entry: './src/client.js',
     output: {
         filename: 'main.min.js',
         path: path.resolve(__dirname, 'dist')
     },
     devtool: 'source-map',
-
-    // node: {
-    //     Buffer: false,
-    //     process: false,
-    //     __filename: false,
-    //     __dirname: false,
-    // },
-
-    // stats: {
-    //     children: false,
-    //     chunks: false,
-    //     source: false,
-    // },
-
-    // stats: 'minimal',
-    resolve: {
-        alias: {
-            // './src/api': './src/api-client'
-            // './api': './src/api/api-client'
-        }
-    },
     module: {
         rules: [
             {
@@ -48,8 +28,6 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: extractScss.extract({
-                    // use: ['css-loader', 'postcss-loader', 'sass-loader'],
-                    // use: ['css-loader', 'sass-loader'],
                     use: [{
                         loader: 'css-loader',
                         options: {

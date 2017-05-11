@@ -10,12 +10,17 @@
 }
 
 .site-header__nav {
+    display: none;
     border: 1px solid #ddd;   
     padding: 20px;
 
     a {
         display: block;
         padding: 0 4px;
+    }
+
+    .site-header--open & {
+        display: block;
     }
 }
 
