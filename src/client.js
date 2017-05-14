@@ -13,7 +13,7 @@ const serverRenderedAppContainer = document.querySelector('#app');
 
 // render(<Foo/>, appContainer);
 // render(<Application API={API}/>, document.body);
-document.body.appendChild(appContainer);
+// document.body.appendChild(appContainer);
 render(<Application API={API}/>, appContainer, serverRenderedAppContainer);
 // serverRenderedAppContainer.remove();
 // const x = render(<Foo/>, serverRenderedAppContainer);
@@ -31,6 +31,6 @@ render(<Application API={API}/>, appContainer, serverRenderedAppContainer);
 
 // serverRenderedAppContainer.parentNode.replaceChild(serverRenderedAppContainer, appContainer);
 
-// if (module.hot) {
+if (process.env.NODE_ENV === 'development') {
     require('preact/devtools');
-// }
+}

@@ -6,33 +6,39 @@ import { h, Component } from 'preact';
 
 import './Header.scss';
 
-export default class Header extends Component {
+const menuItems = [
+    { title: 'Home Title', href: '', text: 'Home' },
+    { title: 'About Title', href: '', text: 'About' },
+    { title: 'Yaaayy Title', href: '', text: 'Yaaayy' },
+];
 
+const cls = { asdf: true, qwertt: 0 };
+
+const Header = ({open, onToggle}) => {
+    return (
+        <header class={classnames({"site-header": true, "site-header--open": open})}>
+            <div class="site-header__header-bar">
+                <button class="site-header__menu-toggle" onClick={onToggle}>Menu</button>
+                Site Header
+            </div>
+            <nav class="site-header__nav">
+                { menuItems.map(x => (<a href={x.href} title={x.title}>{x.text}</a>)) }
+            </nav>
+        </header>
+    );
+};
+
+export default class extends Component {
     constructor() {
         super();
         this.state.open = false;
     }
-    
-    render(props, state) {
 
-        return (
-            <header class={classnames({"site-header": true, "site-header--open": state.open})}>
-                <div class="site-header__header-bar">
-                    <button class="site-header__menu-toggle" onClick={this.toggleMenu.bind(this)}>Menu</button>
-                    Site Header
-                </div>
-                <nav class="site-header__nav">
-                    <a href="/">Home</a>
-                    <a href="/">About</a>
-                </nav>
-                { "asdfg///xxyyaabbccddeeffgghhiijjkkllmmnnOOppqqrrssttuuvvwwxxyyzz11223344556677889900" }
-            </header>
-        );
+    render() {
+        return <Header open={this.state.open} onToggle={this.toggle.bind(this)}/>;
     }
 
-    toggleMenu(a,b) {
-        const oldState = this.state.open;
-        this.setState({ open: !oldState });
-        console.log(this.state.open);
+    toggle() {
+        this.setState({ open: !this.state.open });
     }
 }

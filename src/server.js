@@ -60,28 +60,9 @@ const Html = ({head}) => {
 };
 
 app.get('/', (req, res) => {
-	console.log('qwer222255555');
-	// const html = render(<Application API={API}/>);
 	const head = Helmet.rewind();
 	const html = render(<Html head={head}/>);
 	res.send(html);
-
-	// res.send(`
-    //     <!DOCTYPE html>
-    //     <html ${head.htmlAttributes.toString()}>
-    //         <head>
-	// 			<meta charset="utf-8">
-	// 			${head.title.toString()}
-	// 			${head.meta.toString()}
-	// 			${head.link.toString()}
-	// 			<link rel="stylesheet" href="/static/main.css">
-	// 		</head>
-	// 		<body>
-	// 			<div id="app" class="server-rendered">${html}</div>
-	// 			<script src="/static/main.min.js" defer></script>
-	// 		</body>
-	// 	</html>
-	// `);
 });
 
 
@@ -92,15 +73,3 @@ app.get('/:fox', (req, res) => {
 });
 
 export default app;
-// export default (...args) => {
-
-// 	Object.keys(require.cache).filter(x => x.indexOf('node_modules') < 0).forEach(console.log.bind(console))
-
-// 	const w = require('path').resolve(path.join(__dirname, __filename));
-// 	console.log('called', w);
-
-// 	// delete require.cache['/home/adam/Projects/preact-playground/src/server.js'];
-// 	// console.log(require.cache[w])
-// 	Object.keys(require.cache).filter(x => !x.includes('node_modules') && !x.includes('.scss')).forEach(function (key) { delete require.cache[key] });
-// 	app(...args);
-// }
