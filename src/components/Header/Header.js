@@ -1,5 +1,3 @@
-/** @jsx h */
-
 import classnames from 'classnames';
 
 import { h, Component } from 'preact';
@@ -14,7 +12,7 @@ const menuItems = [
 
 const cls = { asdf: true, qwertt: 0 };
 
-const Header = ({open, onToggle}) => {
+const Header = ({ open, onToggle }) => {
     return (
         <header class={classnames("site-header", { "site-header--open": open })}>
             <div class="site-header__header-bar">

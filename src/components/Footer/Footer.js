@@ -1,5 +1,3 @@
-/** @jsx h */
-
 import './Footer.scss';
 
 import { h, Component } from 'preact';

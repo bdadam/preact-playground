@@ -1,5 +1,3 @@
-/** @jsx h */
-
 // import 'babel-polyfill';
 // import 'core-js';
 
