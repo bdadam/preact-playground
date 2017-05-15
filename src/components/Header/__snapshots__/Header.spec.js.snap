@@ -1,0 +1,13 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Site Header matches snapshot 1`] = `
+<header class="site-header">
+  <div class="site-header__header-bar">
+    <button class="site-header__menu-toggle">Menu</button>Site Header</div>
+  <nav class="site-header__nav">
+    <a href title="Home Title">Home</a>
+    <a href title="About Title">About</a>
+    <a href title="Yaaayy Title">Yaaayy</a>
+  </nav>
+</header>
+`;

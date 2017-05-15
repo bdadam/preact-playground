@@ -16,13 +16,13 @@ const cls = { asdf: true, qwertt: 0 };
 
 const Header = ({open, onToggle}) => {
     return (
-        <header class={classnames({"site-header": true, "site-header--open": open})}>
+        <header class={classnames("site-header", { "site-header--open": open })}>
             <div class="site-header__header-bar">
                 <button class="site-header__menu-toggle" onClick={onToggle}>Menu</button>
                 Site Header
             </div>
             <nav class="site-header__nav">
-                { menuItems.map(x => (<a href={x.href} title={x.title}>{x.text}</a>)) }
+                { menuItems.map(item => (<a href={item.href} title={item.title}>{item.text}</a>)) }
             </nav>
         </header>
     );

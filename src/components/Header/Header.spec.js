@@ -1,0 +1,31 @@
+/** @jsx h */
+
+import { h } from 'preact';
+import render from 'preact-render-to-string';
+import htmlLooksLike from 'html-looks-like';
+
+import Header from './Header';
+
+describe('Site Header', () => {
+    
+    it('looks like', () => {
+        const actual = render(<Header />);
+        const expected = `
+            <header class="site-header">
+                <div class="site-header__header-bar">
+                    <button class="site-header__menu-toggle">Menu</button>
+                    Site Header
+                </div>
+                <nav class="site-header__nav">
+                    {{ ... }}
+                </nav>
+            </header>`;
+
+        htmlLooksLike(actual, expected);
+    });
+
+    it('matches snapshot', () => {
+        const tree = render(<Header />);
+        expect(tree).toMatchSnapshot();
+    });
+});

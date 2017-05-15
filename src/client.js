@@ -1,5 +1,8 @@
 /** @jsx h */
 
+// import 'babel-polyfill';
+// import 'core-js';
+
 import { h, render } from 'preact';
 
 import Application from './Application';

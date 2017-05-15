@@ -27,26 +27,7 @@ module.exports = (isProd, watch) => {
                     test: /\.jsx?$/,
                     exclude: /(node_modules|bower_components)/,
                     use: {
-                        loader: 'babel-loader',
-                        options: {
-                            presets: [
-                                [
-                                    'env',
-                                    {
-                                        targets: {
-                                            browsers: [
-                                                'last 2 versions',
-                                                'safari >= 9',
-                                                'ie >= 11'
-                                            ]
-                                        },
-                                        modules: false,
-                                        loose: true
-                                    }
-                                ],
-                                'react'
-                            ]
-                        }
+                        loader: 'babel-loader'
                     }
                 },
                 {
@@ -58,7 +39,9 @@ module.exports = (isProd, watch) => {
                                 sourceMap: true
                             }
                         },
-                            'postcss-loader',
+                        
+                        'postcss-loader',
+                        
                         {
                             loader: 'sass-loader',
                             options: {
