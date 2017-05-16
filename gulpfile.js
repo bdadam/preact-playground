@@ -1,27 +1,37 @@
 require('babel-register');
 require('ignore-styles');
 
-const nodemon = require('gulp-nodemon');
 const gulp = require('gulp');
-
-let ENV = process.env.NODE_ENV || 'production';
-
-const config = {
-    watch: false,
-    production: ENV === 'production'
-};
 
 const bs = require('browser-sync').create();
 const bs2 = require('browser-sync').create();
 
+process.env.NODE_ENV = process.env.NODE_ENV || 'production';
+process.env.PORT = process.env.PORT || 3000;
+
+const isProduction = () => {
+    return process.env.NODE_ENV === 'production';
+};
+
+const getWebpackConfig = () => {
+    const webpackDevConfig = require('./webpack.common');
+    const webpackProdConfig = require('./webpack.config');
+
+    const config = isProduction()
+        ? webpackProdConfig
+        : Object.assign(webpackDevConfig, { watch: true });
+
+    return config;
+};
+
 gulp.task('start', cb => {
-    
-    let started = false;
+    const nodemon = require('gulp-nodemon');
+
+    var started = false;
 
     return nodemon({
         script: 'index.js',
         ext: 'js',
-        env: { 'NODE_ENV': ENV, PORT: 3000 },
         ignore: ['dist/', 'node_modules/']
     }).on('start', () => {
 
@@ -50,32 +60,25 @@ gulp.task('start', cb => {
     });
 });
 
-gulp.task('set-dev', () => {
-    ENV = process.env.NODE_ENV = 'development';
+gulp.task('set-devmode', () => {
+    process.env.NODE_ENV = 'development';
 });
 
 gulp.task('webpack', () => {
     const webpackStream = require('webpack-stream');
-    const webpack2 = require('webpack');
-    // const webpackConfig = require('./webpack.config');
-
-    // webpackConfig.watch = true;
-    const webpackConfig = require('./config/webpack')(true, true);
+    const webpack = require('webpack');
 
     return gulp.src('src/client.js')
-        .pipe(webpackStream(webpackConfig, webpack2))
-        // .on('error', (e) => { console.error(e); })
-        // .on('error', (e) => { gulp.emit('end') })
-        .on('error', (e) => { })
-        .pipe(gulp.dest('dist/'))
-        .pipe(bs2.stream());
+               .pipe(webpackStream(getWebpackConfig(), webpack))
+               .on('error', (e) => { })
+               .pipe(gulp.dest('dist/'))
+               .pipe(bs2.stream());
 });
 
 gulp.task('bs', () => {
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpack = require('webpack');
-    const webpackConfig = require('./webpack.config');
-    const compiler = webpack(webpackConfig);
+    const compiler = webpack(getWebpackConfig());
 
     const wmw = webpackDevMiddleware(compiler, {
         stats: {
@@ -112,8 +115,7 @@ gulp.task('bs', () => {
 gulp.task('bs2', () => {
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpack = require('webpack');
-    const webpackConfig = require('./webpack.config');
-    const compiler = webpack(webpackConfig);
+    const compiler = webpack(getWebpackConfig());
 
     const wmw = webpackDevMiddleware(compiler, {
         stats: {
@@ -147,22 +149,19 @@ gulp.task('bs2', () => {
     });
 });
 
-const configure = (name, x, y) => {
-    gulp.task(name, () => {
-        config.watch = x;
-        config.production = y;
-    });
 
-    return name;
-}
+
+// gulp.task('jest', () => {
+//     const jest = require('jest');
+//     const jestConfig = require('./package.json').jest;
+//     jestConfig.watch = true;
+    
+//     jest.runCLI(jestConfig, ['./']);
+// });
 
 gulp.task('default', ['start', 'webpack']);
-gulp.task('dev', ['set-dev', 'bs']);
-gulp.task('dev2', ['set-dev', 'webpack', 'bs2', 'start']);
-gulp.task('dev-server', ['set-dev', 'webpack', 'start']);
 gulp.task('build', ['webpack']);
 
-// gulp.task('test', [configure('devxxx', true, false), 'bs']);
-
-// const t = gulp.task('noop');
-// console.log(t);
+gulp.task('dev', ['set-devmode', 'bs', 'jest']);
+gulp.task('dev2', ['set-devmode', 'webpack', 'bs2', 'start']);
+gulp.task('dev-server', ['set-devmode', 'webpack', 'start']);
