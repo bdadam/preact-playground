@@ -1,5 +1,3 @@
-/** @jsx h */
-
 import { h } from 'preact';
 import render from 'preact-render-to-string';
 import htmlLooksLike from 'html-looks-like';
@@ -7,7 +5,7 @@ import htmlLooksLike from 'html-looks-like';
 import Header from './Header';
 
 describe('Site Header', () => {
-    
+
     it('looks like', () => {
         const actual = render(<Header />);
         const expected = `
@@ -27,5 +25,15 @@ describe('Site Header', () => {
     it('matches snapshot', () => {
         const tree = render(<Header />);
         expect(tree).toMatchSnapshot();
+    });
+
+    it('opens on button click', () => {
+        const header = new Header();
+
+        expect(header.state.open).toBe(false);
+        header.toggle();
+        expect(header.state.open).toBe(true);
+        header.toggle();
+        expect(header.state.open).toBe(false);
     });
 });
