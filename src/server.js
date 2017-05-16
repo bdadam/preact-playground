@@ -53,7 +53,7 @@ const Html = ({head}) => {
 		</head>
 		<body>
 			<div id="app" class="server-rendered"><Application API={API}/></div>
-			<script src="/static/main.min.js" defer></script>
+			<script src="/static/main.js" defer></script>
 		</body>
 		</html>
 	);
