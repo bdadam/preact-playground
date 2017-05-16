@@ -24,6 +24,9 @@
         "react"
     ],
 
+    "sourceMaps": "inline",
+    "retainLines": true,
+
     "env": {
         "test": {
             "plugins": [
