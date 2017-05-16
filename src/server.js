@@ -65,8 +65,6 @@ app.get('/', (req, res) => {
 	res.send(html);
 });
 
-
-
 app.get('/:fox', (req, res) => {
 	let html = render(<Fox name={req.params.fox} />);
 	res.send(`<!DOCTYPE html><html><body>${html}</body></html>`);
